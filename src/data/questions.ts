@@ -1,0 +1,697 @@
+export interface Question {
+  id: number;
+  category: string;
+  difficulty: 1 | 2 | 3;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  reference: string;
+  explanation?: string;
+}
+
+export const categories = [
+  { id: "genesis", label: "Génesis", icon: "🌍" },
+  { id: "exodo", label: "Êxodo", icon: "🏔️" },
+  { id: "evangelhos", label: "Evangelhos", icon: "📖" },
+  { id: "profecias", label: "Profecias", icon: "🔮" },
+  { id: "personagens", label: "Personagens", icon: "👤" },
+  { id: "cronologia", label: "Cronologia", icon: "📅" },
+  { id: "leis", label: "Leis e Princípios", icon: "⚖️" },
+  { id: "geral", label: "Conhecimento Geral", icon: "📚" },
+];
+
+export const questions: Question[] = [
+  // === GÉNESIS ===
+  {
+    id: 1,
+    category: "genesis",
+    difficulty: 1,
+    question: "Qual foi a primeira coisa que Deus criou?",
+    options: ["A terra", "Os céus e a terra", "A luz", "A água"],
+    correctIndex: 1,
+    reference: "Génesis 1:1",
+    explanation: "No princípio, Deus criou os céus e a terra.",
+  },
+  {
+    id: 2,
+    category: "genesis",
+    difficulty: 1,
+    question: "Quantos dias Deus levou para completar a criação?",
+    options: ["5 dias", "6 dias", "7 dias", "8 dias"],
+    correctIndex: 1,
+    reference: "Génesis 2:2",
+    explanation: "Deus terminou a sua obra criativa no sexto dia e descansou no sétimo.",
+  },
+  {
+    id: 3,
+    category: "genesis",
+    difficulty: 1,
+    question: "Qual foi o nome da primeira mulher?",
+    options: ["Maria", "Sara", "Eva", "Raquel"],
+    correctIndex: 2,
+    reference: "Génesis 3:20",
+    explanation: "Adão deu à sua esposa o nome de Eva, porque ela havia de ser a mãe de todos os viventes.",
+  },
+  {
+    id: 4,
+    category: "genesis",
+    difficulty: 2,
+    question: "Qual árvore Deus proibiu Adão e Eva de comer o fruto?",
+    options: [
+      "Árvore da vida",
+      "Árvore do conhecimento do bem e do mal",
+      "Árvore do meio do jardim",
+      "Árvore da sabedoria",
+    ],
+    correctIndex: 1,
+    reference: "Génesis 2:17",
+  },
+  {
+    id: 5,
+    category: "genesis",
+    difficulty: 1,
+    question: "Quem construiu a arca para sobreviver ao Dilúvio?",
+    options: ["Abraão", "Moisés", "Noé", "Enoque"],
+    correctIndex: 2,
+    reference: "Génesis 6:14",
+  },
+  {
+    id: 6,
+    category: "genesis",
+    difficulty: 2,
+    question: "Quantos filhos de Noé entraram na arca?",
+    options: ["2", "3", "4", "5"],
+    correctIndex: 1,
+    reference: "Génesis 7:13",
+    explanation: "Sem, Cam e Jafé entraram na arca com as suas esposas.",
+  },
+  {
+    id: 7,
+    category: "genesis",
+    difficulty: 2,
+    question: "Qual foi o sinal da aliança que Deus fez com Noé?",
+    options: ["Uma estrela", "Um arco-íris", "Uma pomba", "Um cordeiro"],
+    correctIndex: 1,
+    reference: "Génesis 9:13",
+  },
+  {
+    id: 8,
+    category: "genesis",
+    difficulty: 3,
+    question: "Qual era o nome original de Abraão?",
+    options: ["Abrão", "Abner", "Abel", "Aarão"],
+    correctIndex: 0,
+    reference: "Génesis 17:5",
+    explanation: "O nome de Abrão foi mudado para Abraão, que significa 'pai de muitas nações'.",
+  },
+  {
+    id: 9,
+    category: "genesis",
+    difficulty: 2,
+    question: "Quem vendeu o seu direito de primogenitura por um prato de lentilhas?",
+    options: ["Jacó", "Esaú", "Ismael", "José"],
+    correctIndex: 1,
+    reference: "Génesis 25:33-34",
+  },
+  {
+    id: 10,
+    category: "genesis",
+    difficulty: 2,
+    question: "Quantos filhos teve Jacó?",
+    options: ["10", "11", "12", "13"],
+    correctIndex: 2,
+    reference: "Génesis 35:22",
+    explanation: "Jacó teve 12 filhos, que deram origem às 12 tribos de Israel.",
+  },
+
+  // === ÊXODO ===
+  {
+    id: 11,
+    category: "exodo",
+    difficulty: 1,
+    question: "Quem liderou os israelitas na saída do Egito?",
+    options: ["Aarão", "Josué", "Moisés", "Calebe"],
+    correctIndex: 2,
+    reference: "Êxodo 3:10",
+  },
+  {
+    id: 12,
+    category: "exodo",
+    difficulty: 2,
+    question: "Quantas pragas Deus enviou sobre o Egito?",
+    options: ["7", "8", "9", "10"],
+    correctIndex: 3,
+    reference: "Êxodo 7-12",
+  },
+  {
+    id: 13,
+    category: "exodo",
+    difficulty: 1,
+    question: "Qual foi a última praga sobre o Egito?",
+    options: [
+      "Escuridão",
+      "Gafanhotos",
+      "Morte dos primogénitos",
+      "Granizo",
+    ],
+    correctIndex: 2,
+    reference: "Êxodo 12:29",
+  },
+  {
+    id: 14,
+    category: "exodo",
+    difficulty: 2,
+    question: "Que mar Moisés abriu para os israelitas passarem?",
+    options: [
+      "Mar Mediterrâneo",
+      "Mar Vermelho",
+      "Mar Morto",
+      "Mar da Galileia",
+    ],
+    correctIndex: 1,
+    reference: "Êxodo 14:21",
+  },
+  {
+    id: 15,
+    category: "exodo",
+    difficulty: 3,
+    question: "Em que monte Moisés recebeu os Dez Mandamentos?",
+    options: ["Monte Carmelo", "Monte Sião", "Monte Sinai", "Monte Horebe"],
+    correctIndex: 2,
+    reference: "Êxodo 19:20",
+  },
+  {
+    id: 16,
+    category: "exodo",
+    difficulty: 2,
+    question: "O que os israelitas comeram durante 40 anos no deserto?",
+    options: ["Pão", "Maná", "Mel", "Figos"],
+    correctIndex: 1,
+    reference: "Êxodo 16:35",
+  },
+  {
+    id: 17,
+    category: "exodo",
+    difficulty: 3,
+    question: "Qual era a profissão de Moisés antes de liderar Israel?",
+    options: ["Carpinteiro", "Pescador", "Pastor", "Sacerdote"],
+    correctIndex: 2,
+    reference: "Êxodo 3:1",
+    explanation: "Moisés pastoreava o rebanho do seu sogro Jetro.",
+  },
+
+  // === EVANGELHOS ===
+  {
+    id: 18,
+    category: "evangelhos",
+    difficulty: 1,
+    question: "Em que cidade nasceu Jesus?",
+    options: ["Nazaré", "Jerusalém", "Belém", "Cafarnaum"],
+    correctIndex: 2,
+    reference: "Mateus 2:1",
+  },
+  {
+    id: 19,
+    category: "evangelhos",
+    difficulty: 1,
+    question: "Quem batizou Jesus?",
+    options: ["Pedro", "João Batista", "Tiago", "André"],
+    correctIndex: 1,
+    reference: "Mateus 3:13",
+  },
+  {
+    id: 20,
+    category: "evangelhos",
+    difficulty: 1,
+    question: "Quantos apóstolos Jesus escolheu?",
+    options: ["10", "11", "12", "13"],
+    correctIndex: 2,
+    reference: "Lucas 6:13",
+  },
+  {
+    id: 21,
+    category: "evangelhos",
+    difficulty: 2,
+    question: "Qual foi o primeiro milagre de Jesus registado na Bíblia?",
+    options: [
+      "Curar um cego",
+      "Transformar água em vinho",
+      "Multiplicar pães",
+      "Acalmar a tempestade",
+    ],
+    correctIndex: 1,
+    reference: "João 2:1-11",
+  },
+  {
+    id: 22,
+    category: "evangelhos",
+    difficulty: 2,
+    question: "Qual apóstolo negou Jesus três vezes?",
+    options: ["João", "Tiago", "Pedro", "Tomé"],
+    correctIndex: 2,
+    reference: "Mateus 26:75",
+  },
+  {
+    id: 23,
+    category: "evangelhos",
+    difficulty: 2,
+    question: "Quantos dias Jesus jejuou no deserto?",
+    options: ["7", "21", "30", "40"],
+    correctIndex: 3,
+    reference: "Mateus 4:2",
+  },
+  {
+    id: 24,
+    category: "evangelhos",
+    difficulty: 1,
+    question: "Qual é o versículo mais curto da Bíblia em português?",
+    options: [
+      "Jesus chorou",
+      "Orai sempre",
+      "Deus é amor",
+      "Alegrai-vos",
+    ],
+    correctIndex: 0,
+    reference: "João 11:35",
+  },
+  {
+    id: 25,
+    category: "evangelhos",
+    difficulty: 3,
+    question: "Na Tradução do Novo Mundo, qual é o nome de Deus usado consistentemente?",
+    options: ["Senhor", "Jeová", "Yahweh", "Adonai"],
+    correctIndex: 1,
+    reference: "Salmo 83:18 (TNM)",
+    explanation: "A Tradução do Novo Mundo restaura o nome divino Jeová em milhares de lugares no texto bíblico.",
+  },
+  {
+    id: 26,
+    category: "evangelhos",
+    difficulty: 2,
+    question: "Quem traiu Jesus por 30 moedas de prata?",
+    options: ["Pedro", "Tomé", "Judas Iscariotes", "Mateus"],
+    correctIndex: 2,
+    reference: "Mateus 26:15",
+  },
+  {
+    id: 27,
+    category: "evangelhos",
+    difficulty: 3,
+    question: "Segundo a TNM, qual era a 'estaca de tortura' em vez de 'cruz'?",
+    options: [
+      "O instrumento de execução de Jesus",
+      "Um castigo romano comum",
+      "Uma árvore sagrada",
+      "Um símbolo religioso",
+    ],
+    correctIndex: 0,
+    reference: "Mateus 27:40 (TNM)",
+    explanation: "A TNM usa 'estaca de tortura' em vez de 'cruz', baseando-se no significado original do grego 'staurós'.",
+  },
+
+  // === PROFECIAS ===
+  {
+    id: 28,
+    category: "profecias",
+    difficulty: 2,
+    question: "Que profeta foi engolido por um grande peixe?",
+    options: ["Elias", "Jonas", "Isaías", "Daniel"],
+    correctIndex: 1,
+    reference: "Jonas 1:17",
+  },
+  {
+    id: 29,
+    category: "profecias",
+    difficulty: 2,
+    question: "Quem interpretou os sonhos do rei Nabucodonosor?",
+    options: ["José", "Moisés", "Daniel", "Isaías"],
+    correctIndex: 2,
+    reference: "Daniel 2:27-28",
+  },
+  {
+    id: 30,
+    category: "profecias",
+    difficulty: 3,
+    question: "Na estátua do sonho de Nabucodonosor, o que representava a cabeça de ouro?",
+    options: ["Medo-Pérsia", "Babilónia", "Grécia", "Roma"],
+    correctIndex: 1,
+    reference: "Daniel 2:38",
+  },
+  {
+    id: 31,
+    category: "profecias",
+    difficulty: 3,
+    question: "Segundo Apocalipse, quantos são os 'ungidos' que governarão com Cristo?",
+    options: ["12.000", "24.000", "144.000", "1.000.000"],
+    correctIndex: 2,
+    reference: "Apocalipse 14:1",
+  },
+  {
+    id: 32,
+    category: "profecias",
+    difficulty: 2,
+    question: "O que o livro de Apocalipse descreve como 'a grande tribulação'?",
+    options: [
+      "O Dilúvio de Noé",
+      "As pragas do Egito",
+      "Um período de aflição sem precedentes",
+      "A destruição de Jerusalém",
+    ],
+    correctIndex: 2,
+    reference: "Apocalipse 7:14",
+  },
+  {
+    id: 33,
+    category: "profecias",
+    difficulty: 3,
+    question: "Que profeta falou sobre 'novos céus e uma nova terra'?",
+    options: ["Jeremias", "Ezequiel", "Isaías", "Oseias"],
+    correctIndex: 2,
+    reference: "Isaías 65:17",
+  },
+
+  // === PERSONAGENS ===
+  {
+    id: 34,
+    category: "personagens",
+    difficulty: 1,
+    question: "Quem matou o gigante Golias?",
+    options: ["Saul", "Sansão", "Davi", "Jonatã"],
+    correctIndex: 2,
+    reference: "1 Samuel 17:50",
+  },
+  {
+    id: 35,
+    category: "personagens",
+    difficulty: 1,
+    question: "Quem foi o homem mais forte da Bíblia?",
+    options: ["Sansão", "Davi", "Golias", "Josué"],
+    correctIndex: 0,
+    reference: "Juízes 14-16",
+  },
+  {
+    id: 36,
+    category: "personagens",
+    difficulty: 2,
+    question: "Qual rei construiu o primeiro templo em Jerusalém?",
+    options: ["Davi", "Salomão", "Ezequias", "Josias"],
+    correctIndex: 1,
+    reference: "1 Reis 6:1",
+  },
+  {
+    id: 37,
+    category: "personagens",
+    difficulty: 2,
+    question: "Quem foi lançado na cova dos leões?",
+    options: ["Jonas", "Daniel", "José", "Elias"],
+    correctIndex: 1,
+    reference: "Daniel 6:16",
+  },
+  {
+    id: 38,
+    category: "personagens",
+    difficulty: 3,
+    question: "Qual profeta foi levado ao céu num carro de fogo?",
+    options: ["Enoque", "Moisés", "Elias", "Eliseu"],
+    correctIndex: 2,
+    reference: "2 Reis 2:11",
+  },
+  {
+    id: 39,
+    category: "personagens",
+    difficulty: 1,
+    question: "Quem foi a mãe de Jesus?",
+    options: ["Marta", "Maria", "Maria Madalena", "Isabel"],
+    correctIndex: 1,
+    reference: "Mateus 1:18",
+  },
+  {
+    id: 40,
+    category: "personagens",
+    difficulty: 2,
+    question: "Qual apóstolo era conhecido como 'o discípulo amado'?",
+    options: ["Pedro", "Paulo", "João", "Tiago"],
+    correctIndex: 2,
+    reference: "João 21:20",
+  },
+  {
+    id: 41,
+    category: "personagens",
+    difficulty: 3,
+    question: "Quem era Matusalém e por que é famoso?",
+    options: [
+      "Profeta que previu o dilúvio",
+      "O homem que viveu mais anos (969)",
+      "O primeiro rei de Israel",
+      "O construtor da Torre de Babel",
+    ],
+    correctIndex: 1,
+    reference: "Génesis 5:27",
+  },
+
+  // === CRONOLOGIA ===
+  {
+    id: 42,
+    category: "cronologia",
+    difficulty: 2,
+    question: "Quantos anos os israelitas ficaram no Egito?",
+    options: ["200", "300", "400", "430"],
+    correctIndex: 3,
+    reference: "Êxodo 12:40",
+  },
+  {
+    id: 43,
+    category: "cronologia",
+    difficulty: 1,
+    question: "Quantos anos durou o reinado de Salomão?",
+    options: ["20", "30", "40", "50"],
+    correctIndex: 2,
+    reference: "1 Reis 11:42",
+  },
+  {
+    id: 44,
+    category: "cronologia",
+    difficulty: 3,
+    question: "Em que ano foi destruído o templo de Jerusalém pelos babilónios?",
+    options: ["607 a.C.", "586 a.C.", "537 a.C.", "70 d.C."],
+    correctIndex: 0,
+    reference: "2 Reis 25:8-9",
+    explanation: "As Testemunhas de Jeová consideram 607 a.C. como a data da destruição de Jerusalém.",
+  },
+  {
+    id: 45,
+    category: "cronologia",
+    difficulty: 2,
+    question: "Quantos anos os israelitas vaguearam pelo deserto?",
+    options: ["10", "20", "30", "40"],
+    correctIndex: 3,
+    reference: "Números 14:33-34",
+  },
+  {
+    id: 46,
+    category: "cronologia",
+    difficulty: 3,
+    question: "Segundo o entendimento das Testemunhas de Jeová, quando começou a presença de Cristo?",
+    options: ["33 d.C.", "1879", "1914", "1919"],
+    correctIndex: 2,
+    reference: "Mateus 24:3",
+    explanation: "Baseado na cronologia bíblica, 1914 marca o início da presença invisível de Cristo e o estabelecimento do Reino de Deus.",
+  },
+
+  // === LEIS E PRINCÍPIOS ===
+  {
+    id: 47,
+    category: "leis",
+    difficulty: 1,
+    question: "Qual é o maior mandamento segundo Jesus?",
+    options: [
+      "Não matarás",
+      "Amar a Deus de todo o coração",
+      "Honrar pai e mãe",
+      "Não roubarás",
+    ],
+    correctIndex: 1,
+    reference: "Mateus 22:37",
+  },
+  {
+    id: 48,
+    category: "leis",
+    difficulty: 2,
+    question: "Qual é o segundo maior mandamento?",
+    options: [
+      "Não cobiçarás",
+      "Guardar o sábado",
+      "Amar o próximo como a si mesmo",
+      "Não terás outros deuses",
+    ],
+    correctIndex: 2,
+    reference: "Mateus 22:39",
+  },
+  {
+    id: 49,
+    category: "leis",
+    difficulty: 2,
+    question: "Quantos são os Dez Mandamentos dados a Moisés?",
+    options: ["8", "10", "12", "15"],
+    correctIndex: 1,
+    reference: "Êxodo 20:1-17",
+  },
+  {
+    id: 50,
+    category: "leis",
+    difficulty: 3,
+    question: "Segundo Atos 15:29, de que coisas os cristãos devem abster-se?",
+    options: [
+      "Carne de porco e marisco",
+      "Sangue, coisas estranguladas e imoralidade sexual",
+      "Vinho e bebidas fortes",
+      "Trabalho ao sábado",
+    ],
+    correctIndex: 1,
+    reference: "Atos 15:29",
+  },
+
+  // === CONHECIMENTO GERAL ===
+  {
+    id: 51,
+    category: "geral",
+    difficulty: 1,
+    question: "Quantos livros tem a Bíblia?",
+    options: ["39", "46", "66", "73"],
+    correctIndex: 2,
+    reference: "Índice Bíblico",
+    explanation: "A Bíblia contém 66 livros: 39 no Antigo Testamento e 27 no Novo Testamento.",
+  },
+  {
+    id: 52,
+    category: "geral",
+    difficulty: 2,
+    question: "Qual é o livro mais curto da Bíblia?",
+    options: ["3 João", "2 João", "Judas", "Obadias"],
+    correctIndex: 1,
+    reference: "2 João",
+  },
+  {
+    id: 53,
+    category: "geral",
+    difficulty: 2,
+    question: "Qual é o livro mais longo da Bíblia?",
+    options: ["Génesis", "Isaías", "Salmos", "Jeremias"],
+    correctIndex: 2,
+    reference: "Salmos",
+  },
+  {
+    id: 54,
+    category: "geral",
+    difficulty: 1,
+    question: "Quem escreveu a maioria das cartas do Novo Testamento?",
+    options: ["Pedro", "João", "Paulo", "Tiago"],
+    correctIndex: 2,
+    reference: "Epístolas Paulinas",
+  },
+  {
+    id: 55,
+    category: "geral",
+    difficulty: 3,
+    question: "Quantas vezes aparece o nome Jeová na Tradução do Novo Mundo?",
+    options: [
+      "Cerca de 237",
+      "Cerca de 3.000",
+      "Cerca de 7.000",
+      "Cerca de 10.000",
+    ],
+    correctIndex: 2,
+    reference: "Apêndice A5 (TNM)",
+    explanation: "O nome divino Jeová aparece cerca de 7.000 vezes no texto hebraico original.",
+  },
+  {
+    id: 56,
+    category: "geral",
+    difficulty: 2,
+    question: "Qual é a última palavra da Bíblia?",
+    options: ["Fim", "Amén", "Glória", "Jesus"],
+    correctIndex: 1,
+    reference: "Apocalipse 22:21",
+  },
+  {
+    id: 57,
+    category: "geral",
+    difficulty: 3,
+    question: "Em que idiomas foi originalmente escrita a Bíblia?",
+    options: [
+      "Latim e grego",
+      "Hebraico, aramaico e grego",
+      "Hebraico e grego",
+      "Aramaico e latim",
+    ],
+    correctIndex: 1,
+    reference: "Introdução Bíblica",
+  },
+  {
+    id: 58,
+    category: "geral",
+    difficulty: 1,
+    question: "Que fruto é frequentemente associado ao pecado de Adão e Eva?",
+    options: ["Maçã", "Uva", "Figo", "A Bíblia não especifica o fruto"],
+    correctIndex: 3,
+    reference: "Génesis 3:6",
+    explanation: "A Bíblia apenas diz 'fruto da árvore', nunca especifica que era uma maçã.",
+  },
+  {
+    id: 59,
+    category: "personagens",
+    difficulty: 2,
+    question: "Quem disse: 'Eu sou o caminho, a verdade e a vida'?",
+    options: ["Moisés", "Davi", "Jesus", "Paulo"],
+    correctIndex: 2,
+    reference: "João 14:6",
+  },
+  {
+    id: 60,
+    category: "profecias",
+    difficulty: 2,
+    question: "O que a Bíblia promete para o futuro da Terra?",
+    options: [
+      "Será destruída pelo fogo",
+      "Será transformada num paraíso",
+      "Deixará de existir",
+      "Será abandonada",
+    ],
+    correctIndex: 1,
+    reference: "Salmo 37:29",
+    explanation: "Os justos possuirão a terra e nela habitarão para sempre.",
+  },
+];
+
+export function getQuestionsByCategory(category: string): Question[] {
+  return questions.filter((q) => q.category === category);
+}
+
+export function getQuestionsByDifficulty(difficulty: 1 | 2 | 3): Question[] {
+  return questions.filter((q) => q.difficulty === difficulty);
+}
+
+export function getRandomQuestions(count: number, category?: string, difficulty?: 1 | 2 | 3): Question[] {
+  let pool = [...questions];
+  if (category) pool = pool.filter((q) => q.category === category);
+  if (difficulty) pool = pool.filter((q) => q.difficulty === difficulty);
+
+  const shuffled = pool.sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, Math.min(count, shuffled.length));
+}
+
+export function getDifficultyLabel(d: 1 | 2 | 3): string {
+  return d === 1 ? "Fácil" : d === 2 ? "Médio" : "Difícil";
+}
+
+export function getDifficultyColor(d: 1 | 2 | 3): string {
+  return d === 1
+    ? "text-success"
+    : d === 2
+    ? "text-warning"
+    : "text-danger";
+}
+
+export function getPointsForDifficulty(d: 1 | 2 | 3): number {
+  return d === 1 ? 100 : d === 2 ? 200 : 300;
+}
