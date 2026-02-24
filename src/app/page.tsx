@@ -98,7 +98,7 @@ export default function Home() {
         transition={{ duration: 0.8, delay: 1 }}
         className="mt-12 text-xs text-muted/50 relative z-10"
       >
-        60+ perguntas em 8 categorias
+        200+ perguntas em 8 categorias
       </motion.p>
     </div>
   );

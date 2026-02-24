@@ -1,9 +1,9 @@
 "use client";
 
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { useQuizStore } from "@/lib/quiz-store";
-import { Trophy, RotateCcw, Home, Flame, Target, Clock, CheckCircle2, XCircle } from "lucide-react";
-import { categories, getDifficultyLabel, getDifficultyColor } from "@/data/questions";
+import { useQuizStore, getDifficultyLabel, getDifficultyColor } from "@/lib/quiz-store";
+import { Trophy, RotateCcw, Home, Flame, Target, Clock, CheckCircle2, XCircle, Save } from "lucide-react";
 import Link from "next/link";
 
 interface QuizResultsProps {
@@ -11,12 +11,35 @@ interface QuizResultsProps {
 }
 
 export default function QuizResults({ onRestart }: QuizResultsProps) {
-  const { playerName, score, results, questions, bestStreak, resetQuiz } = useQuizStore();
+  const { playerName, score, results, questions, bestStreak, resetQuiz, saveResults } = useQuizStore();
+  const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const didSave = useRef(false);
 
   const correctCount = results.filter((r) => r.correct).length;
   const totalQuestions = results.length;
-  const percentage = Math.round((correctCount / totalQuestions) * 100);
-  const avgTime = Math.round(results.reduce((sum, r) => sum + r.timeMs, 0) / totalQuestions / 1000);
+  const percentage = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+  const avgTime = totalQuestions > 0
+    ? Math.round(results.reduce((sum, r) => sum + r.timeMs, 0) / totalQuestions / 1000)
+    : 0;
+
+  useEffect(() => {
+    if (didSave.current || totalQuestions === 0) return;
+    didSave.current = true;
+
+    async function save() {
+      setSaving(true);
+      try {
+        await saveResults();
+        setSaved(true);
+      } catch (error) {
+        console.error("Error saving results:", error);
+      } finally {
+        setSaving(false);
+      }
+    }
+    save();
+  }, [totalQuestions, saveResults]);
 
   const getGrade = () => {
     if (percentage >= 90) return { label: "Excelente!", emoji: "🏆", color: "text-gold" };
@@ -62,6 +85,19 @@ export default function QuizResults({ onRestart }: QuizResultsProps) {
         <div className="text-center mb-6">
           <div className="text-5xl font-bold gradient-text mb-1">{score}</div>
           <div className="text-sm text-muted">pontos</div>
+          {/* Save status */}
+          <div className="mt-2 flex items-center justify-center gap-1 text-xs">
+            {saving ? (
+              <span className="text-muted">Guardando pontuação...</span>
+            ) : saved ? (
+              <span className="text-success flex items-center gap-1">
+                <Save size={12} />
+                Pontuação guardada no ranking!
+              </span>
+            ) : (
+              <span className="text-muted/50">Offline - pontuação não guardada</span>
+            )}
+          </div>
         </div>
 
         <div className="grid grid-cols-4 gap-4">
@@ -107,7 +143,8 @@ export default function QuizResults({ onRestart }: QuizResultsProps) {
         <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
           {results.map((result, i) => {
             const q = questions[i];
-            const cat = categories.find((c) => c.id === q.category);
+            if (!q) return null;
+            const cat = q.categories;
             return (
               <div
                 key={i}

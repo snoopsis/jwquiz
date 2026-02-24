@@ -1,34 +1,70 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { BookOpen, Settings, Play } from "lucide-react";
+import { BookOpen, Settings, Play, Loader2 } from "lucide-react";
 import { useQuizStore } from "@/lib/quiz-store";
-import { categories } from "@/data/questions";
-import { useState } from "react";
+import { getAllCategories } from "@/lib/services/category-service";
+import { DbCategory } from "@/lib/supabase";
 
 interface QuizSetupProps {
   onStart: () => void;
 }
 
 export default function QuizSetup({ onStart }: QuizSetupProps) {
-  const { setConfig, startQuiz, playerName } = useQuizStore();
+  const { setConfig, startQuiz, playerName, isLoading } = useQuizStore();
   const [name, setName] = useState(playerName);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<1 | 2 | 3 | null>(null);
   const [questionCount, setQuestionCount] = useState(10);
   const [timePerQuestion, setTimePerQuestion] = useState(20);
+  const [categories, setCategories] = useState<DbCategory[]>([]);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [error, setError] = useState("");
 
-  const handleStart = () => {
+  useEffect(() => {
+    async function loadCategories() {
+      try {
+        const cats = await getAllCategories();
+        setCategories(cats);
+      } catch (err) {
+        console.error("Error loading categories:", err);
+        setError("Erro ao carregar categorias");
+      } finally {
+        setLoadingCategories(false);
+      }
+    }
+    loadCategories();
+  }, []);
+
+  const handleStart = async () => {
     if (!name.trim()) return;
+    setError("");
     setConfig({
       playerName: name.trim(),
       category: selectedCategory,
+      categoryId: selectedCategoryId,
       difficulty: selectedDifficulty,
       questionCount,
       timePerQuestion,
     });
-    startQuiz();
-    onStart();
+    try {
+      await startQuiz();
+      onStart();
+    } catch {
+      setError("Erro ao carregar perguntas. Verifique a conexão.");
+    }
+  };
+
+  const handleCategorySelect = (cat: DbCategory) => {
+    if (selectedCategory === cat.slug) {
+      setSelectedCategory(null);
+      setSelectedCategoryId(null);
+    } else {
+      setSelectedCategory(cat.slug);
+      setSelectedCategoryId(cat.id);
+    }
   };
 
   return (
@@ -61,24 +97,29 @@ export default function QuizSetup({ onStart }: QuizSetupProps) {
           Categoria{" "}
           <span className="text-muted/50">(deixe vazio para todas)</span>
         </label>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() =>
-                setSelectedCategory(selectedCategory === cat.id ? null : cat.id)
-              }
-              className={`p-3 rounded-xl border text-sm text-center transition-all duration-200 ${
-                selectedCategory === cat.id
-                  ? "border-accent bg-accent/10 text-accent"
-                  : "border-card-border bg-card/30 text-muted hover:border-accent/30"
-              }`}
-            >
-              <span className="text-lg block mb-1">{cat.icon}</span>
-              {cat.label}
-            </button>
-          ))}
-        </div>
+        {loadingCategories ? (
+          <div className="flex items-center justify-center py-8 text-muted">
+            <Loader2 size={20} className="animate-spin mr-2" />
+            Carregando categorias...
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => handleCategorySelect(cat)}
+                className={`p-3 rounded-xl border text-sm text-center transition-all duration-200 ${
+                  selectedCategory === cat.slug
+                    ? "border-accent bg-accent/10 text-accent"
+                    : "border-card-border bg-card/30 text-muted hover:border-accent/30"
+                }`}
+              >
+                <span className="text-lg block mb-1">{cat.icon}</span>
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Difficulty */}
@@ -148,14 +189,30 @@ export default function QuizSetup({ onStart }: QuizSetupProps) {
         </div>
       </div>
 
+      {/* Error */}
+      {error && (
+        <div className="mb-4 p-3 rounded-xl border border-danger/30 bg-danger/5 text-danger text-sm text-center">
+          {error}
+        </div>
+      )}
+
       {/* Start button */}
       <button
         onClick={handleStart}
-        disabled={!name.trim()}
+        disabled={!name.trim() || isLoading || loadingCategories}
         className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-accent text-white font-semibold text-lg hover:bg-accent-light disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-200"
       >
-        <Play size={20} />
-        Começar Quiz
+        {isLoading ? (
+          <>
+            <Loader2 size={20} className="animate-spin" />
+            Carregando...
+          </>
+        ) : (
+          <>
+            <Play size={20} />
+            Começar Quiz
+          </>
+        )}
       </button>
     </motion.div>
   );

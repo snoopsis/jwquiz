@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useQuizStore } from "@/lib/quiz-store";
-import { categories, getDifficultyLabel, getDifficultyColor } from "@/data/questions";
+import { useQuizStore, getDifficultyLabel, getDifficultyColor } from "@/lib/quiz-store";
 import { Clock, Flame, BookOpen, ChevronRight, CheckCircle2, XCircle } from "lucide-react";
 
 const optionLetters = ["A", "B", "C", "D"];
@@ -63,7 +62,9 @@ export default function QuizGame() {
     nextQuestion();
   };
 
-  const category = categories.find((c) => c.id === question.category);
+  if (!question) return null;
+
+  const category = question.categories;
   const timerPercent = (timeLeft / timePerQuestion) * 100;
   const timerColor =
     timerPercent > 50 ? "bg-success" : timerPercent > 25 ? "bg-warning" : "bg-danger";
@@ -148,7 +149,7 @@ export default function QuizGame() {
           {/* Options */}
           <div className="space-y-3">
             {question.options.map((option, i) => {
-              const isCorrect = i === question.correctIndex;
+              const isCorrect = i === question.correct_index;
               const isSelected = selectedOption === i;
               let borderClass = "border-card-border hover:border-accent/40";
               let bgClass = "bg-card/30";
