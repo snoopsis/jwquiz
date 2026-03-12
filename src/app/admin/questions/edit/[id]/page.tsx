@@ -39,12 +39,12 @@ export default function EditQuestionPage() {
         if (q) {
           setCategoryId(q.category_id);
           setDifficulty(q.difficulty);
-          setQuestion(q.question);
-          setOptions(q.options);
-          setCorrectIndex(q.correct_index);
-          setReference(q.reference);
+          setQuestion(q.question ?? "");
+          setOptions(Array.isArray(q.options) ? q.options : ["", "", "", ""]);
+          setCorrectIndex(q.correct_index ?? 0);
+          setReference(q.reference ?? "");
           setExplanation(q.explanation || "");
-          setIsActive(q.is_active);
+          setIsActive(q.is_active ?? true);
         }
       } catch (err) {
         console.error("Error loading data:", err);
@@ -179,7 +179,7 @@ export default function EditQuestionPage() {
           <div>
             <label className="block text-sm text-muted mb-2">Opções *</label>
             <div className="space-y-3">
-              {options.map((opt, i) => (
+              {(options || []).map((opt, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <button
                     type="button"
