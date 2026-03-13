@@ -40,7 +40,12 @@ export default function EditQuestionPage() {
           setCategoryId(q.category_id);
           setDifficulty(q.difficulty);
           setQuestion(q.question ?? "");
-          setOptions(Array.isArray(q.options) ? q.options : ["", "", "", ""]);
+          const opts = Array.isArray(q.options)
+            ? q.options
+            : typeof q.options === "string"
+              ? (() => { try { const p = JSON.parse(q.options); return Array.isArray(p) ? p : ["", "", "", ""]; } catch { return ["", "", "", ""]; } })()
+              : ["", "", "", ""];
+          setOptions(opts);
           setCorrectIndex(q.correct_index ?? 0);
           setReference(q.reference ?? "");
           setExplanation(q.explanation || "");
